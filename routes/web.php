@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\JobListingController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 
@@ -12,3 +13,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 require __DIR__.'/settings.php';
+
+
+Route::get('/', [JobListingController::class, 'index'])->name('jobListing.index');
+Route::get('/{jobListing}', [JobListingController::class, 'show'])->name('jobListing.show');
+
+Route::middleware('auth')->group(function(){
+    Route::get('/create', [JobListingController::class, 'create'])->name('jobListing.create');
+    Route::post('/store', [JobListingController::class, 'store'])->name('jobListing.store');
+});
+
